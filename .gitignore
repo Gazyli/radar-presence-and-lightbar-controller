@@ -1,1 +1,4 @@
 *~lock~
+fp-info-cache
+*-backups/
+~*.lck

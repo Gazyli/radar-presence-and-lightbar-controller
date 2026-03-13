@@ -33,19 +33,20 @@ sensor:
 output:
   - platform: ledc
     id: output_cold_white
-    pin: GPIO0
+    pin: GPIO7
     frequency: 19531 Hz 
     
   - platform: ledc
     id: output_warm_white
-    pin: GPIO1
+    pin: GPIO8
     frequency: 19531 Hz
 
 light:
   - platform: cwww
+    name: None
     cold_white: output_cold_white
     warm_white: output_warm_white
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
-    constant_brightness: True
+    constant_brightness: true
     restore_mode: RESTORE_DEFAULT_OFF

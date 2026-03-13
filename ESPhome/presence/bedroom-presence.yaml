@@ -42,6 +42,63 @@ ld2450:
   id: ld2450_radar
   uart_id: uart_ld2450
 
+
+# ==================================
+# Global Variables
+# ==================================
+globals:
+  - id: cos_a
+    type: float
+  - id: sin_a
+    type: float
+
+# ==================================
+# Radar configuration fields
+# ==================================
+number:
+  - platform: template
+    name: "Radar Mount Angle"
+    id: radar_angle
+    min_value: -180
+    max_value: 180
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "°"
+    entity_category: "config"
+    on_value:
+      then:
+        - lambda: |-
+            float rad = x * (M_PI / 180.0f);
+            id(cos_a) = cos(rad);
+            id(sin_a) = sin(rad);
+            ESP_LOGD("radar", "Angle updated: cos=%.3f, sin=%.3f", id(cos_a), id(sin_a));
+
+  - platform: template
+    name: "X Axis Offset"
+    id: x_offset
+    min_value: 0
+    max_value: 615
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+  - platform: template
+    name: "Y Axis Offset"
+    id: y_offset
+    min_value: 0
+    max_value: 550
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
 # ==================================
 # Binary Sensors
 # ==================================
@@ -72,25 +129,127 @@ sensor:
       name: "Presence Target Count"
     target_1:
       x:
-        name: "Target 1 X"
+        id: target_1_x
+        internal: true
       y:
-        name: "Target 1 Y"
-      distance:
-        name: "Target 1 Distance"
+        id: target_1_y
+        internal: true
     target_2:
       x:
-        name: "Target 2 X"
+        id: target_2_x
+        internal: true
       y:
-        name: "Target 2 Y"
-      distance:
-        name: "Target 2 Distance"
+        id: target_2_y
+        internal: true
     target_3:
       x:
-        name: "Target 3 X"
+        id: target_3_x
+        internal: true
       y:
-        name: "Target 3 Y"
-      distance:
-        name: "Target 3 Distance"
+        id: target_3_y
+        internal: true
+
+  - platform: template
+    name: "Target 1 Global X"
+    id: target_1_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_1_x).state == 0 && id(target_1_y).state == 0) return NAN;
+
+      float target_1_x_cm = id(target_1_x).state / 10.0;
+      float target_1_y_cm = id(target_1_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_1_x_cm * cos_angle - target_1_y_cm * sin_angle + id(x_offset).state;
+    
+  - platform: template
+    name: "Target 1 Global Y"
+    id: target_1_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_1_x).state == 0 && id(target_1_y).state == 0) return NAN;
+
+      float target_1_x_cm = id(target_1_x).state / 10.0;
+      float target_1_y_cm = id(target_1_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_1_x_cm * sin_angle + target_1_y_cm * cos_angle + id(y_offset).state;
+
+  - platform: template
+    name: "Target 2 Global X"
+    id: target_2_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_2_x).state == 0 && id(target_2_y).state == 0) return NAN;
+
+      float target_2_x_cm = id(target_2_x).state / 10.0;
+      float target_2_y_cm = id(target_2_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_2_x_cm * cos_angle - target_2_y_cm * sin_angle + id(x_offset).state;
+  
+  - platform: template
+    name: "Target 2 Global Y"
+    id: target_2_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_2_x).state == 0 && id(target_2_y).state == 0) return NAN;
+
+      float target_2_x_cm = id(target_2_x).state / 10.0;
+      float target_2_y_cm = id(target_2_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_2_x_cm * sin_angle + target_2_y_cm * cos_angle + id(y_offset).state;
+    
+  - platform: template
+    name: "Target 3 Global X"
+    id: target_3_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_3_x).state == 0 && id(target_3_y).state == 0) return NAN;
+
+      float target_3_x_cm = id(target_3_x).state / 10.0;
+      float target_3_y_cm = id(target_3_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_3_x_cm * cos_angle - target_3_y_cm * sin_angle + id(x_offset).state;
+  
+  - platform: template
+    name: "Target 3 Global Y"
+    id: target_3_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    lambda: |-
+      if (id(target_3_x).state == 0 && id(target_3_y).state == 0) return NAN;
+
+      float target_3_x_cm = id(target_3_x).state / 10.0;
+      float target_3_y_cm = id(target_3_y).state / 10.0;
+
+      float angle_rad = id(radar_angle).state * M_PI / 180.0;
+      float cos_angle = cos(angle_rad);
+      float sin_angle = sin(angle_rad);
+
+      return target_3_x_cm * sin_angle + target_3_y_cm * cos_angle + id(y_offset).state;
 
   # BH1750 Light Sensor
   - platform: bh1750
