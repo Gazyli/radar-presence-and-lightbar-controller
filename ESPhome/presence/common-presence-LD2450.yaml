@@ -56,7 +56,7 @@ binary_sensor:
   - platform: ld2450
     ld2450_id: ld2450_radar
     has_target:
-      name: "Presence"
+      name: None
 
 sensor:
   - platform: ld2450
