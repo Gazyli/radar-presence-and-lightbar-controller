@@ -1,0 +1,258 @@
+esphome:
+  includes:
+    - radar_math.h
+
+esp32:
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+api:
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  output_power: 8.5db
+
+# ==================================
+# Hardware Buses
+# ==================================
+uart:
+  id: uart_ld2450
+  tx_pin: GPIO21
+  rx_pin: GPIO20
+  baud_rate: 256000
+
+i2c:
+  id: i2c_bus
+  sda: GPIO9
+  scl: GPIO8
+  scan: true
+
+# ==================================
+# LD2450 Radar Hub
+# ==================================
+ld2450:
+  id: ld2450_radar
+  uart_id: uart_ld2450
+
+# ==================================
+# Radar configuration fields
+# ==================================
+number:
+  - platform: template
+    name: "Radar Mount Angle"
+    id: radar_angle
+    min_value: -180
+    max_value: 180
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "°"
+    entity_category: "config"
+
+  - platform: template
+    name: "X Axis Offset"
+    id: x_offset
+    min_value: 0
+    max_value: 615
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+  - platform: template
+    name: "Y Axis Offset"
+    id: y_offset
+    min_value: 0
+    max_value: 550
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+# ==================================
+# Binary Sensors
+# ==================================
+binary_sensor:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    has_target:
+      name: "Presence"
+
+# ==================================
+# Sensors
+# ==================================
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+  
+  - platform: uptime
+    type: seconds
+    name: "Uptime Sensor"
+
+  # LD2450 Tracking Metrics
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    target_count:
+      name: "Presence Target Count"
+    target_1:
+      x:
+        id: target_1_x
+        internal: true
+      y:
+        id: target_1_y
+        internal: true
+    target_2:
+      x:
+        id: target_2_x
+        internal: true
+      y:
+        id: target_2_y
+        internal: true
+    target_3:
+      x:
+        id: target_3_x
+        internal: true
+      y:
+        id: target_3_y
+        internal: true
+
+  - platform: template
+    name: "Target 1 Global X"
+    id: target_1_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_x(
+        id(target_1_x).state, 
+        id(target_1_y).state, 
+        id(radar_angle).state, 
+        id(x_offset).state
+      );
+    
+  - platform: template
+    name: "Target 1 Global Y"
+    id: target_1_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_y(
+        id(target_1_x).state, 
+        id(target_1_y).state, 
+        id(radar_angle).state, 
+        id(y_offset).state
+      );
+
+  - platform: template
+    name: "Target 2 Global X"
+    id: target_2_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_x(
+        id(target_2_x).state, 
+        id(target_2_y).state, 
+        id(radar_angle).state, 
+        id(x_offset).state
+      );
+
+  - platform: template
+    name: "Target 2 Global Y"
+    id: target_2_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_y(
+        id(target_2_x).state, 
+        id(target_2_y).state, 
+        id(radar_angle).state, 
+        id(y_offset).state
+      );
+
+  - platform: template
+    name: "Target 3 Global X"
+    id: target_3_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_x(
+        id(target_3_x).state, 
+        id(target_3_y).state, 
+        id(radar_angle).state, 
+        id(x_offset).state
+      );
+
+  - platform: template
+    name: "Target 3 Global Y"
+    id: target_3_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_y(
+        id(target_3_x).state, 
+        id(target_3_y).state, 
+        id(radar_angle).state, 
+        id(y_offset).state
+      );
+
+  # BH1750 Light Sensor
+  - platform: bh1750
+    name: "Illuminance"
+    address: 0x23
+    update_interval: 60s
+
+  # AHT20 Temperature & Humidity Sensor
+  - platform: aht10
+    variant: AHT20
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+    update_interval: 60s
+
+  # BMP280 Temperature & Pressure Sensor
+  - platform: bmp280_i2c
+    address: 0x77
+    temperature:
+      name: "Temperature (BMP280)"
+      entity_category: diagnostic
+    pressure:
+      name: "Pressure"
+    update_interval: 60s

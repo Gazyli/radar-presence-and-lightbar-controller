@@ -1,0 +1,7 @@
+esphome:
+  name: kitchen-presence
+  friendly_name: "Kitchen Presence"
+  area: "Kitchen"
+
+packages:
+  common_presence: !include common-presence-LD2450.yaml
