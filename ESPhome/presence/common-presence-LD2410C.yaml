@@ -1,0 +1,26 @@
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+
+uart:
+  id: uart_ld2410
+  tx_pin: GPIO21
+  rx_pin: GPIO20
+  baud_rate: 256000
+
+ld2410:
+  id: ld2410_radar
+  uart_id: uart_ld2410
+
+switch:
+  - platform: ld2410
+    ld2410_id: ld2410_radar
+    bluetooth:
+      name: "Bluetooth"
+      restore_mode: ALWAYS_OFF
+      entity_category: "config"
+
+binary_sensor:
+  - platform: ld2410
+    ld2410_id: ld2410_radar
+    has_target:
+      name: "Presence"

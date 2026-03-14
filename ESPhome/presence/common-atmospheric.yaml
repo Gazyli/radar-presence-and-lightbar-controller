@@ -1,0 +1,31 @@
+i2c:
+  id: i2c_bus
+  sda: GPIO9
+  scl: GPIO8
+  scan: true
+
+sensor:
+  # BH1750 Light Sensor
+  - platform: bh1750
+    name: "Illuminance"
+    address: 0x23
+    update_interval: 60s
+
+  # AHT20 Temperature & Humidity Sensor
+  - platform: aht10
+    variant: AHT20
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+    update_interval: 60s
+
+  # BMP280 Temperature & Pressure Sensor
+  - platform: bmp280_i2c
+    address: 0x77
+    temperature:
+      name: "Temperature (BMP280)"
+      entity_category: diagnostic
+    pressure:
+      name: "Pressure"
+    update_interval: 60s

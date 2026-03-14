@@ -1,0 +1,6 @@
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal dB"
+  
+  - platform: uptime
+    name: "Uptime Sensor"

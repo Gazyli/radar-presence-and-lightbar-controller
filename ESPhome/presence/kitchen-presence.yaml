@@ -4,4 +4,6 @@ esphome:
   area: "Kitchen"
 
 packages:
+  common_esp32c3_setup: !include ../common/common-esp32c3-setup.yaml
+  common_diagnostics: !include ../common/common-diagnostics.yaml
   common_presence: !include common-presence-LD2450.yaml
