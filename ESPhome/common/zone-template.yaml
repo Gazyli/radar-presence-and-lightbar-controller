@@ -1,0 +1,66 @@
+esphome:
+  includes:
+    - ../common/zone_math.h
+
+number:
+  - platform: template
+    name: "Zone ${zone_num} X Min"
+    id: zone_${zone_num}_x_min
+    min_value: 0
+    max_value: 615
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+  - platform: template
+    name: "Zone ${zone_num} X Max"
+    id: zone_${zone_num}_x_max
+    min_value: 0
+    max_value: 615
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+  - platform: template
+    name: "Zone ${zone_num} Y Min"
+    id: zone_${zone_num}_y_min
+    min_value: 0
+    max_value: 550
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+  - platform: template
+    name: "Zone ${zone_num} Y Max"
+    id: zone_${zone_num}_y_max
+    min_value: 0
+    max_value: 550
+    step: 1
+    mode: box
+    optimistic: true
+    restore_value: true
+    unit_of_measurement: "cm"
+    entity_category: "config"
+
+binary_sensor:
+  - platform: template
+    name: "Zone ${zone_num} Presence"
+    id: zone_${zone_num}_presence
+    device_class: occupancy
+    lambda: |-
+      return zone_math::any_target_in_zone(
+        id(target_1_global_x).state, id(target_1_global_y).state,
+        id(target_2_global_x).state, id(target_2_global_y).state,
+        id(target_3_global_x).state, id(target_3_global_y).state,
+        id(zone_${zone_num}_x_min).state, id(zone_${zone_num}_x_max).state,
+        id(zone_${zone_num}_y_min).state, id(zone_${zone_num}_y_max).state
+      );

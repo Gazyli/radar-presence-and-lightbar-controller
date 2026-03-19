@@ -15,6 +15,20 @@ ld2450:
   id: ld2450_radar
   uart_id: uart_ld2450
 
+packages:
+  zone_1: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "1"
+  zone_2: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "2"
+  zone_3: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "3"
+
 number:
   - platform: template
     name: "Radar Mount Angle"
