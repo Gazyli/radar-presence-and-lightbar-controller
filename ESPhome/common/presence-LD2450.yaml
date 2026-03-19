@@ -1,7 +1,3 @@
-esphome:
-  includes:
-    - ../common/radar_math.h
-
 logger:
   hardware_uart: USB_SERIAL_JTAG
 
@@ -14,20 +10,6 @@ uart:
 ld2450:
   id: ld2450_radar
   uart_id: uart_ld2450
-
-packages:
-  zone_1: !include
-    file: ../common/zone-template.yaml
-    vars:
-      zone_num: "1"
-  zone_2: !include
-    file: ../common/zone-template.yaml
-    vars:
-      zone_num: "2"
-  zone_3: !include
-    file: ../common/zone-template.yaml
-    vars:
-      zone_num: "3"
 
 number:
   - platform: template
@@ -99,104 +81,30 @@ sensor:
         id: target_3_y
         internal: true
 
-  - platform: template
-    name: "Target 1 Global X"
-    id: target_1_global_x
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_x(
-        id(target_1_x).state, 
-        id(target_1_y).state, 
-        id(radar_angle).state, 
-        id(x_offset).state
-      );
-    
-  - platform: template
-    name: "Target 1 Global Y"
-    id: target_1_global_y
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_y(
-        id(target_1_x).state, 
-        id(target_1_y).state, 
-        id(radar_angle).state, 
-        id(y_offset).state
-      );
-
-  - platform: template
-    name: "Target 2 Global X"
-    id: target_2_global_x
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_x(
-        id(target_2_x).state, 
-        id(target_2_y).state, 
-        id(radar_angle).state, 
-        id(x_offset).state
-      );
-
-  - platform: template
-    name: "Target 2 Global Y"
-    id: target_2_global_y
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_y(
-        id(target_2_x).state, 
-        id(target_2_y).state, 
-        id(radar_angle).state, 
-        id(y_offset).state
-      );
-
-  - platform: template
-    name: "Target 3 Global X"
-    id: target_3_global_x
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_x(
-        id(target_3_x).state, 
-        id(target_3_y).state, 
-        id(radar_angle).state, 
-        id(x_offset).state
-      );
-
-  - platform: template
-    name: "Target 3 Global Y"
-    id: target_3_global_y
-    entity_category: "diagnostic"
-    unit_of_measurement: "cm"
-    update_interval: 1s
-    filters:
-      - exponential_moving_average:
-          alpha: 0.3
-    lambda: |-
-      return radar_math::get_global_y(
-        id(target_3_x).state, 
-        id(target_3_y).state, 
-        id(radar_angle).state, 
-        id(y_offset).state
-      );
+packages:
+  # Target global coordinate templates
+  target_template: !include
+    file: ../common/target-template.yaml
+    vars:
+      target_num: "1"
+  target_2_template: !include
+    file: ../common/target-template.yaml
+    vars:
+      target_num: "2"
+  target_3_template: !include
+    file: ../common/target-template.yaml
+    vars:
+      target_num: "3"
+  # Zone templates
+  zone_1: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "1"
+  zone_2: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "2"
+  zone_3: !include
+    file: ../common/zone-template.yaml
+    vars:
+      zone_num: "3"

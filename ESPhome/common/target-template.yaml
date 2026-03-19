@@ -1,0 +1,38 @@
+esphome:
+  includes:
+    - ../common/radar_math.h
+
+sensor:
+  - platform: template
+    name: "Target ${target_num} Global X"
+    id: target_${target_num}_global_x
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_x(
+        id(target_${target_num}_x).state, 
+        id(target_${target_num}_y).state, 
+        id(radar_angle).state, 
+        id(x_offset).state
+      );
+    
+  - platform: template
+    name: "Target ${target_num} Global Y"
+    id: target_${target_num}_global_y
+    entity_category: "diagnostic"
+    unit_of_measurement: "cm"
+    update_interval: 1s
+    filters:
+      - exponential_moving_average:
+          alpha: 0.3
+    lambda: |-
+      return radar_math::get_global_y(
+        id(target_${target_num}_x).state, 
+        id(target_${target_num}_y).state, 
+        id(radar_angle).state, 
+        id(y_offset).state
+      );
