@@ -1,14 +1,14 @@
 esphome:
   includes:
-    - radar_math.h
+    - ../common/radar_math.h
 
 logger:
   hardware_uart: USB_SERIAL_JTAG
 
 uart:
   id: uart_ld2450
-  tx_pin: GPIO21
-  rx_pin: GPIO20
+  tx_pin: ${uart_tx_pin}
+  rx_pin: ${uart_rx_pin}
   baud_rate: 256000
 
 ld2450:

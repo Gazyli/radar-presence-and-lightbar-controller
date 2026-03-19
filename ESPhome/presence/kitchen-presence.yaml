@@ -3,8 +3,16 @@ esphome:
   friendly_name: "Kitchen Presence"
   area: "Kitchen"
 
+substitutions:
+  # Presence
+  uart_tx_pin: "GPIO21"
+  uart_rx_pin: "GPIO20"
+  # Atmospheric
+  i2c_sda_pin: "GPIO9"
+  i2c_scl_pin: "GPIO8"
+
 packages:
-  common_esp32c3_setup: !include ../common/common-esp32c3-setup.yaml
-  common_diagnostics: !include ../common/common-diagnostics.yaml
-  common_presence: !include common-presence-LD2450.yaml
-  common_atmospheric: !include common-atmospheric.yaml
+  common_esp32c3_setup: !include ../common/esp32c3-base.yaml
+  common_diagnostics: !include ../common/diagnostics.yaml
+  common_presence: !include ../common/presence-LD2450.yaml
+  common_atmospheric: !include ../common/atmospheric.yaml

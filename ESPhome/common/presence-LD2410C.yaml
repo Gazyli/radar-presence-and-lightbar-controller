@@ -3,8 +3,8 @@ logger:
 
 uart:
   id: uart_ld2410
-  tx_pin: GPIO21
-  rx_pin: GPIO20
+  tx_pin: ${uart_tx_pin}
+  rx_pin: ${uart_rx_pin}
   baud_rate: 256000
 
 ld2410:

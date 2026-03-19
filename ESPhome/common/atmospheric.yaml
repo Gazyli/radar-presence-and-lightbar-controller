@@ -1,7 +1,7 @@
 i2c:
   id: i2c_bus
-  sda: GPIO9
-  scl: GPIO8
+  sda: ${i2c_sda_pin}
+  scl: ${i2c_scl_pin}
   scan: true
 
 sensor:

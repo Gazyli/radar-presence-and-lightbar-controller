@@ -3,7 +3,11 @@ esphome:
   friendly_name: "Desk Lightbar"
   area: "Desk"
 
+substitutions:
+  cold_white_pin: "GPIO7"
+  warm_white_pin: "GPIO8"
+
 packages:
-  common_esp32c3_setup: !include ../common/common-esp32c3-setup.yaml
-  common_diagnostics: !include ../common/common-diagnostics.yaml
-  common_lightbar: !include common-lightbar.yaml
+  common_esp32c3_setup: !include ../common/esp32c3-base.yaml
+  common_diagnostics: !include ../common/diagnostics.yaml
+  common_lightbar: !include ../common/lightbar.yaml

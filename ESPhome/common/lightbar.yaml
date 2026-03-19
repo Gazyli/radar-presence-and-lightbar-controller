@@ -1,12 +1,12 @@
 output:
   - platform: ledc
     id: output_cold_white
-    pin: GPIO7
+    pin: ${cold_white_pin}
     frequency: 19531 Hz 
     
   - platform: ledc
     id: output_warm_white
-    pin: GPIO8
+    pin: ${warm_white_pin}
     frequency: 19531 Hz
 
 light:
