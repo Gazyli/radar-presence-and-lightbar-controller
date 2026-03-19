@@ -6,7 +6,7 @@ number:
   - platform: template
     name: "Zone ${zone_num} X Min"
     id: zone_${zone_num}_x_min
-    min_value: 0
+    min_value: -100
     max_value: 615
     step: 1
     mode: box
@@ -18,7 +18,7 @@ number:
   - platform: template
     name: "Zone ${zone_num} X Max"
     id: zone_${zone_num}_x_max
-    min_value: 0
+    min_value: -100
     max_value: 615
     step: 1
     mode: box
@@ -30,7 +30,7 @@ number:
   - platform: template
     name: "Zone ${zone_num} Y Min"
     id: zone_${zone_num}_y_min
-    min_value: 0
+    min_value: -100
     max_value: 550
     step: 1
     mode: box
@@ -42,7 +42,7 @@ number:
   - platform: template
     name: "Zone ${zone_num} Y Max"
     id: zone_${zone_num}_y_max
-    min_value: 0
+    min_value: -100
     max_value: 550
     step: 1
     mode: box

@@ -15,7 +15,7 @@ namespace zone_math {
         float t3_x, float t3_y, 
         float min_x, float max_x, float min_y, float max_y) {
 
-        if (min_x == 0 && max_x == 0 && min_y == 0 && max_y == 0) return false;
+        if (min_x <= 0 && max_x <= 0 && min_y <= 0 && max_y <= 0) return false;
         
         return is_in_zone(t1_x, t1_y, min_x, max_x, min_y, max_y) ||
                is_in_zone(t2_x, t2_y, min_x, max_x, min_y, max_y) ||

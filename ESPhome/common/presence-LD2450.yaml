@@ -63,23 +63,65 @@ sensor:
       x:
         id: target_1_x
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
       y:
         id: target_1_y
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
     target_2:
       x:
         id: target_2_x
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
       y:
         id: target_2_y
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
     target_3:
       x:
         id: target_3_x
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
       y:
         id: target_3_y
         internal: true
+        filters:
+          - timeout:
+              timeout: 500ms
+              value: last
+          - throttle_with_priority:
+              timeout: 200ms
+              value: .nan
 
 packages:
   # Target global coordinate templates

@@ -8,10 +8,11 @@ sensor:
     id: target_${target_num}_global_x
     entity_category: "diagnostic"
     unit_of_measurement: "cm"
-    update_interval: 1s
+    update_interval: 0.2s
     filters:
       - exponential_moving_average:
-          alpha: 0.3
+          alpha: 0.5
+          send_every: 1
     lambda: |-
       return radar_math::get_global_x(
         id(target_${target_num}_x).state, 
@@ -25,10 +26,11 @@ sensor:
     id: target_${target_num}_global_y
     entity_category: "diagnostic"
     unit_of_measurement: "cm"
-    update_interval: 1s
+    update_interval: 0.2s
     filters:
       - exponential_moving_average:
-          alpha: 0.3
+          alpha: 0.5
+          send_every: 1
     lambda: |-
       return radar_math::get_global_y(
         id(target_${target_num}_x).state, 
