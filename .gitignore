@@ -2,4 +2,4 @@
 fp-info-cache
 *-backups/
 ~*.lck
-druk.*
+druk*
