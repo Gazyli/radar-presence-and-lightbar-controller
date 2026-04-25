@@ -2,6 +2,8 @@
 
 This repository contains the hardware designs and custom firmware for two integrated smart home devices designed from scratch: a **mmWave radar presence sensor** and a **dual-channel CCT light controller**.
 
+<img width="4080" height="3072" alt="sensor PCBs" src="https://github.com/user-attachments/assets/d9ef7a5a-ca0f-4014-a3eb-ebd542040d4c" />
+
 ## Overview
 
 The two devices are built around the ESP32-C3 microcontroller and are designed to seamlessly integrate with Home Assistant via ESPHome. The presence sensor utilizes advanced mmWave radar technology for accurate spatial tracking, while the light controller offers precise control over brightness and color temperature for LED lighting setups. Both devices are designed with modular firmware configurations to allow for easy customization and deployment across multiple nodes in a smart home environment.
