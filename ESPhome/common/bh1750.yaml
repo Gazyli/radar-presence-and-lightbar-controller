@@ -1,0 +1,12 @@
+i2c:
+  id: i2c_bus
+  sda: ${i2c_sda_pin}
+  scl: ${i2c_scl_pin}
+  scan: true
+
+sensor:
+  # BH1750 Light Sensor
+  - platform: bh1750
+    name: "Illuminance"
+    address: 0x23
+    update_interval: 60s
