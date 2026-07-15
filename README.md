@@ -29,5 +29,4 @@ A precision lighting controller tailored for dual-channel (warm/cool white) LED 
   * `lightbar/`: Deployment-specific configurations for the CCT light controllers.
   * `presence/`: Deployment-specific configurations for the presence sensors.
 * **`schematics/`**: KiCad project files (`.kicad_sch`, `.kicad_pcb`) containing the circuit designs for both the presence sensor and light controller variants.
-
-
+* **`enclosures/`**: 3D printable enclosure designs for both devices, including STL and 3MF files.
