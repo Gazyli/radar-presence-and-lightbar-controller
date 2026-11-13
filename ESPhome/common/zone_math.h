@@ -13,10 +13,18 @@ namespace zone_math {
         float t1_x, float t1_y, 
         float t2_x, float t2_y, 
         float t3_x, float t3_y, 
-        float min_x, float max_x, float min_y, float max_y) {
+        float min_x, float max_x, float min_y, float max_y,
+        float deadzone, bool was_in_zone) {
 
         if (min_x <= 0 && max_x <= 0 && min_y <= 0 && max_y <= 0) return false;
-        
+
+        if (was_in_zone) {
+            min_x -= deadzone;
+            max_x += deadzone;
+            min_y -= deadzone;
+            max_y += deadzone;
+        }
+
         return is_in_zone(t1_x, t1_y, min_x, max_x, min_y, max_y) ||
                is_in_zone(t2_x, t2_y, min_x, max_x, min_y, max_y) ||
                is_in_zone(t3_x, t3_y, min_x, max_x, min_y, max_y);

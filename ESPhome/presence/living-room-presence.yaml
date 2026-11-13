@@ -1,7 +1,7 @@
 esphome:
-  name: bedroom-presence
-  friendly_name: "Bedroom Presence"
-  area: "Bedroom"
+  name: living-room-presence
+  friendly_name: "Living Room Presence"
+  area: "Living Room"
 
 substitutions:
   # Presence

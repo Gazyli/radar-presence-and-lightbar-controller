@@ -7,7 +7,7 @@ number:
     name: "Zone ${zone_num} X Min"
     id: zone_${zone_num}_x_min
     min_value: -100
-    max_value: 615
+    max_value: 600
     step: 1
     mode: box
     optimistic: true
@@ -19,7 +19,7 @@ number:
     name: "Zone ${zone_num} X Max"
     id: zone_${zone_num}_x_max
     min_value: -100
-    max_value: 615
+    max_value: 600
     step: 1
     mode: box
     optimistic: true
@@ -31,7 +31,7 @@ number:
     name: "Zone ${zone_num} Y Min"
     id: zone_${zone_num}_y_min
     min_value: -100
-    max_value: 550
+    max_value: 600
     step: 1
     mode: box
     optimistic: true
@@ -43,7 +43,7 @@ number:
     name: "Zone ${zone_num} Y Max"
     id: zone_${zone_num}_y_max
     min_value: -100
-    max_value: 550
+    max_value: 600
     step: 1
     mode: box
     optimistic: true
@@ -62,5 +62,6 @@ binary_sensor:
         id(target_2_global_x).state, id(target_2_global_y).state,
         id(target_3_global_x).state, id(target_3_global_y).state,
         id(zone_${zone_num}_x_min).state, id(zone_${zone_num}_x_max).state,
-        id(zone_${zone_num}_y_min).state, id(zone_${zone_num}_y_max).state
+        id(zone_${zone_num}_y_min).state, id(zone_${zone_num}_y_max).state,
+        id(deadzone).state, id(zone_${zone_num}_presence).state
       );

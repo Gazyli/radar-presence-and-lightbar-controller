@@ -25,22 +25,10 @@ number:
     entity_category: "config"
 
   - platform: template
-    name: "X Axis Offset"
-    id: x_offset
+    name: "Deadzone"
+    id: deadzone
     min_value: 0
-    max_value: 615
-    step: 1
-    mode: box
-    optimistic: true
-    restore_value: true
-    unit_of_measurement: "cm"
-    entity_category: "config"
-
-  - platform: template
-    name: "Y Axis Offset"
-    id: y_offset
-    min_value: 0
-    max_value: 550
+    max_value: 100
     step: 1
     mode: box
     optimistic: true

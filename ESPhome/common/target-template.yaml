@@ -17,8 +17,7 @@ sensor:
       return radar_math::get_global_x(
         id(target_${target_num}_x).state, 
         id(target_${target_num}_y).state, 
-        id(radar_angle).state, 
-        id(x_offset).state
+        id(radar_angle).state
       );
     
   - platform: template
@@ -35,6 +34,5 @@ sensor:
       return radar_math::get_global_y(
         id(target_${target_num}_x).state, 
         id(target_${target_num}_y).state, 
-        id(radar_angle).state, 
-        id(y_offset).state
+        id(radar_angle).state
       );
